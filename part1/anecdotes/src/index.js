@@ -9,8 +9,6 @@ const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
 
-console.log(points);
-
   const getRandomAnecdote = (arrayLength) => {
     setSelected(Math.floor(Math.random() * arrayLength));
   }
@@ -18,13 +16,17 @@ console.log(points);
   const vote = (index) => {
     const copyOfPoints = [ ...points ];
     copyOfPoints[index] = copyOfPoints[index] + 1;
-    
     setPoints(copyOfPoints);
   }
+
+  const getTopAnecdote = () => {
+    return points.indexOf(Math.max(...points));
+  }  
 
   return (
     <>
       <div>
+        <h1>Anecdote of the day</h1>
         {props.anecdotes[selected]}
       </div>
       <div>
@@ -36,6 +38,8 @@ console.log(points);
           text="next anecdote"
           clickHandler={() => getRandomAnecdote(anecdotes.length)} />
       </div>
+      <h1>Anecdote with most votes</h1>
+      {props.anecdotes[(getTopAnecdote())]}
     </>
   )
 }
