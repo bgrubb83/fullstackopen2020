@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 const Button = ({ text, clickHandler }) => <button onClick={clickHandler}>{text}</button>
 
 
-const Statistic = ({ text, value }) => <p>{text} {value}</p>
+const Statistic = ({ text, value }) => <tr><td>{text}</td><td>{value}</td></tr>
 
 const Statistics = ({ good, neutral, bad }) => {
   if (!good && !neutral && !bad) {
@@ -19,37 +19,37 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <>
       <h1>statistics</h1>
+      <table><tbody>
+        <Statistic
+          text="good"
+          value={good}
+        />
 
-      <Statistic
-        text="good"
-        value={good}
-      />
+        <Statistic
+          text="neutral"
+          value={neutral}
+        />
 
-      <Statistic
-        text="neutral"
-        value={neutral}
-      />
+        <Statistic
+          text="bad"
+          value={bad}
+        />
 
-      <Statistic
-        text="bad"
-        value={bad}
-      />
+        <Statistic
+          text="all"
+          value={good + neutral + bad}
+        />
 
-      <Statistic
-        text="all"
-        value={good + neutral + bad}
-      />
+        <Statistic
+          text="average"
+          value={(good - bad) / (good + neutral + bad)}
+        />
 
-      <Statistic
-        text="average"
-        value={(good - bad) / (good + neutral + bad)}
-      />
-
-      <Statistic
-        text="positive"
-        value={((good / (good + neutral + bad)) * 100) + '%'}
-      />
-      
+        <Statistic
+          text="positive"
+          value={((good / (good + neutral + bad)) * 100) + '%'}
+        />
+      </tbody></table>
     </>
   )
 }
