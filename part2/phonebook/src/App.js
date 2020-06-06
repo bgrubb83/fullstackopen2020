@@ -47,7 +47,11 @@ const App = () => {
           setNewName('');
           setNewNumber('');
           setNotification(
-            `Added ${newName}`
+            {
+              text: `Added ${newName}`,
+              isError: false,
+            }
+
           )
           setTimeout(() => {
             setNotification(null)
@@ -64,7 +68,24 @@ const App = () => {
             setNewName('');
             setNewNumber('');
             setNotification(
-              `${newName} updated`
+              {
+                text: `${newName} updated`,
+                isError: false,
+              }
+
+            )
+            setTimeout(() => {
+              setNotification(null)
+            }, 5000)
+          })
+          .catch((error) => {
+            setPersons(persons.filter(p => p.id !== existingPerson.id))
+            setNotification(
+              {
+                text: `Information for ${newName} has already been removed from server`,
+                isError: true,
+              }
+
             )
             setTimeout(() => {
               setNotification(null)
@@ -95,7 +116,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification notification={notification} />
+      <Notification
+        notification={notification}
+      />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <PersonForm
         addPerson={addPerson}
