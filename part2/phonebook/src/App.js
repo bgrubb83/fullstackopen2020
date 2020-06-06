@@ -38,7 +38,7 @@ const App = () => {
       const newPerson = { name: newName, number: newNumber };
 
       personService
-        .create( newPerson)
+        .create(newPerson)
         .then(response => {
           setPersons(persons.concat(response))
           setNewName('');
@@ -46,6 +46,18 @@ const App = () => {
         })
     } else {
       alert(`${newName} is already added to phonebook`);
+    }
+  }
+
+  const deletePerson = (event, person) => {
+    const confirmed = window.confirm(`Delete ${person.name}?`);
+    if (confirmed) {
+      personService.deletePerson(person.id)
+        .then(status => {
+          if (status === 200) {
+            setPersons(persons.filter(filteredPerson => filteredPerson.id !== person.id));
+          }
+        })
     }
   }
 
@@ -67,7 +79,10 @@ const App = () => {
         handleNewNumberChange={handleNewNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
+      <Persons
+        persons={personsToShow}
+        deletePerson={deletePerson}
+      />
     </div>
   )
 }
