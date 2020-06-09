@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     personService
-      .getAll('http://localhost:3001/persons')
+      .getAll()
       .then(response => {
         setPersons(response)
       })
@@ -100,7 +100,7 @@ const App = () => {
     if (confirmed) {
       personService.deletePerson(person.id)
         .then(status => {
-          if (status === 200) {
+          if (status === 204) {
             setPersons(persons.filter(filteredPerson => filteredPerson.id !== person.id));
           }
         })
